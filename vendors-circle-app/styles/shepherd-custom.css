@@ -1,0 +1,225 @@
+/* Custom Shepherd.js Tour Styles for Vendors Circle */
+
+/* Override default shepherd styles with Vendors Circle branding */
+.shepherd-modal-overlay-container {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.shepherd-element {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 400px;
+  z-index: 9999;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .shepherd-element {
+    background: #1F2937;
+    border: 1px solid #374151;
+  }
+  
+  .shepherd-text {
+    color: #F3F4F6;
+  }
+  
+  .shepherd-header {
+    border-bottom-color: #374151;
+  }
+}
+
+.shepherd-content {
+  padding: 0;
+}
+
+.shepherd-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.shepherd-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.shepherd-cancel-icon {
+  color: #6B7280;
+  font-size: 24px;
+  font-weight: 300;
+  transition: color 0.2s;
+}
+
+.shepherd-cancel-icon:hover {
+  color: #2652B1;
+}
+
+.shepherd-text {
+  padding: 16px 24px;
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.shepherd-text strong {
+  color: #2652B1;
+  font-weight: 600;
+}
+
+.shepherd-footer {
+  padding: 16px 24px 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid #E5E7EB;
+}
+
+.shepherd-button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  outline: none;
+}
+
+.shepherd-button-primary {
+  background-color: #2652B1;
+  color: white;
+}
+
+.shepherd-button-primary:hover {
+  background-color: #1d3f8f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.shepherd-button-secondary {
+  background-color: transparent;
+  color: #6B7280;
+  border: 1px solid #D1D5DB;
+}
+
+.shepherd-button-secondary:hover {
+  background-color: #F9FAFB;
+  border-color: #9CA3AF;
+  color: #374151;
+}
+
+/* Arrow styling */
+.shepherd-arrow {
+  width: 16px;
+  height: 16px;
+}
+
+.shepherd-arrow::before {
+  background: white;
+  border: 1px solid #E5E7EB;
+}
+
+@media (prefers-color-scheme: dark) {
+  .shepherd-arrow::before {
+    background: #1F2937;
+    border-color: #374151;
+  }
+}
+
+/* Progress indicator (optional) */
+.shepherd-progress {
+  display: flex;
+  gap: 4px;
+  padding: 0 24px 16px;
+}
+
+.shepherd-progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #D1D5DB;
+  transition: background 0.2s;
+}
+
+.shepherd-progress-dot.active {
+  background: #2652B1;
+}
+
+.shepherd-progress-dot.completed {
+  background: #10B981;
+}
+
+/* Animation */
+.shepherd-element {
+  animation: shepherdFadeIn 0.3s ease-out;
+}
+
+@keyframes shepherdFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Highlight effect for attached elements */
+.shepherd-target {
+  animation: shepherdPulse 2s infinite;
+}
+
+@keyframes shepherdPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(38, 82, 177, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(38, 82, 177, 0);
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .shepherd-element {
+    max-width: calc(100vw - 32px);
+    margin: 16px;
+  }
+  
+  .shepherd-header,
+  .shepherd-text,
+  .shepherd-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  .shepherd-title {
+    font-size: 16px;
+  }
+  
+  .shepherd-text {
+    font-size: 13px;
+  }
+  
+  .shepherd-button {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+/* Special styling for welcome/intro steps */
+.shepherd-element.shepherd-welcome {
+  text-align: center;
+}
+
+.shepherd-element.shepherd-welcome .shepherd-text {
+  font-size: 15px;
+  padding: 20px 24px;
+}
+
+.shepherd-element.shepherd-welcome .shepherd-title {
+  font-size: 22px;
+}

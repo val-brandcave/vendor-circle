@@ -1,0 +1,7 @@
+{
+  "microsoft-edge-tools.webhint.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.formatOnSave": false
+}

@@ -1,0 +1,215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --tooltip-bg: #ffffff;
+  --tooltip-border: #e5e7eb;
+  --tooltip-text: #111827;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+    --tooltip-bg: #1f2937;
+    --tooltip-border: #374151;
+    --tooltip-text: #f9fafb;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Shepherd.js Tour Customization */
+.shepherd-modal-overlay-container {
+  z-index: 9998;
+}
+
+.shepherd-element {
+  z-index: 9999;
+  max-width: 400px;
+}
+
+.shepherd-theme-custom .shepherd-content {
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.shepherd-theme-custom .shepherd-text {
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.shepherd-theme-custom .shepherd-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.shepherd-theme-custom .shepherd-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.shepherd-theme-custom .shepherd-button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 200ms;
+  border: none;
+}
+
+.shepherd-theme-custom .shepherd-button-primary {
+  background: #2652B1;
+  color: white !important;
+}
+
+.shepherd-theme-custom .shepherd-button-primary:hover {
+  background: #1e4391;
+}
+
+.shepherd-theme-custom .shepherd-button-secondary {
+  background: transparent;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+}
+
+.shepherd-theme-custom .shepherd-button-secondary:hover {
+  background: #f3f4f6;
+}
+
+.shepherd-theme-custom .shepherd-cancel-icon {
+  color: #9ca3af;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.shepherd-theme-custom .shepherd-cancel-icon:hover {
+  color: #4b5563;
+}
+
+/* Light mode (default) - Explicit styling */
+.shepherd-theme-custom .shepherd-content {
+  background: white;
+  color: #111827;
+}
+
+.shepherd-theme-custom .shepherd-header,
+.shepherd-theme-custom .shepherd-footer {
+  border-color: #e5e7eb;
+  background: white;
+}
+
+/* Dark mode support - Responds to app theme toggle */
+.dark .shepherd-theme-custom .shepherd-content {
+  background: #1f2937 !important;
+  color: #f9fafb;
+}
+
+.dark .shepherd-theme-custom .shepherd-header {
+  border-color: #374151;
+  background: #1f2937;
+  color: #f9fafb;
+}
+
+.dark .shepherd-theme-custom .shepherd-footer {
+  border-color: #374151;
+  background: #1f2937;
+}
+
+.dark .shepherd-theme-custom .shepherd-button-secondary {
+  color: #e5e7eb !important;
+  border-color: #4b5563;
+  background: transparent;
+}
+
+.dark .shepherd-theme-custom .shepherd-button-secondary:hover {
+  background: #374151;
+  color: #f9fafb !important;
+}
+
+.dark .shepherd-theme-custom .shepherd-cancel-icon {
+  color: #9ca3af;
+}
+
+.dark .shepherd-theme-custom .shepherd-cancel-icon:hover {
+  color: #d1d5db;
+}
+
+.dark .shepherd-theme-custom .shepherd-text {
+  color: #e5e7eb;
+}
+
+/* Fix for rounded corners in dark mode */
+.dark .shepherd-theme-custom .shepherd-content * {
+  border-radius: inherit;
+}
+
+/* Custom Scrollbar Styles */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db #f3f4f6;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Dark mode scrollbar */
+.dark .custom-scrollbar {
+  scrollbar-color: #4b5563 #1f2937;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #4b5563;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
