@@ -240,6 +240,13 @@ export default function LandingPage() {
         </div>
       </div>
 
+      {/* Sign Out Info Banner */}
+      <div className="max-w-7xl mx-auto mb-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          <strong>💡 Pro Tip:</strong> You can sign out from any user type (top-right menu → "Sign Out") and return to this catalogue page to test another account or auth flow.
+        </p>
+      </div>
+
       {/* Quick Start Section - Accordion */}
       <div className="max-w-7xl mx-auto mb-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
         <button
@@ -371,7 +378,7 @@ export default function LandingPage() {
                   Authentication Flows
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  Test sign in flows with magic links
+                  Sign in via magic links - Use the correct email or you won't reach the right account
                 </p>
               </div>
             </div>
@@ -386,7 +393,7 @@ export default function LandingPage() {
         {/* Auth Flows Content */}
         {expandedSections.authFlows && (
           <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Card 4: Direct Signin */}
+          {/* Card 1: Tom SignIn */}
           <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-6 border border-gray-200 dark:border-gray-600 hover:border-primary transition-all">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
@@ -394,30 +401,37 @@ export default function LandingPage() {
               </div>
               <div>
                 <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                  Direct Sign In
+                  Tom Reynolds
                 </h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Test returning user login
+                <p className="text-xs text-gray-600 dark:text-gray-400">
+                  Individual Vendor
                 </p>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  value={signinEmail}
-                  onChange={(e) => setSigninEmail(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
-                  placeholder="existing-user@example.com"
-                />
+            <div className="space-y-3">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Use this email to sign in via magic link:
+              </p>
+              
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 relative">
+                <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Email</p>
+                <p className="text-sm font-mono font-semibold text-gray-900 dark:text-white">tom@demo.com</p>
               </div>
 
               <button
-                onClick={() => router.push(`/signin${signinEmail ? `?email=${encodeURIComponent(signinEmail)}` : ''}`)}
+                onClick={() => {
+                  navigator.clipboard.writeText('tom@demo.com');
+                  alert('✅ Email copied to clipboard!');
+                }}
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm"
+              >
+                <Mail className="w-4 h-4" />
+                Copy Email
+              </button>
+
+              <button
+                onClick={() => router.push('/signin?email=tom@demo.com')}
                 className="w-full bg-primary hover:bg-primary-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
               >
                 <LogIn className="w-4 h-4" />
@@ -426,7 +440,54 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Card 5: Admin Login */}
+          {/* Card 2: Sarah SignIn */}
+          <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-6 border border-gray-200 dark:border-gray-600 hover:border-primary transition-all">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+                <LogIn className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                  Sarah Martinez
+                </h2>
+                <p className="text-xs text-gray-600 dark:text-gray-400">
+                  Business Admin
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Use this email to sign in via magic link:
+              </p>
+              
+              <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-3 relative">
+                <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Email</p>
+                <p className="text-sm font-mono font-semibold text-gray-900 dark:text-white">sarah@demo.com</p>
+              </div>
+
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText('sarah@demo.com');
+                  alert('✅ Email copied to clipboard!');
+                }}
+                className="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm"
+              >
+                <Mail className="w-4 h-4" />
+                Copy Email
+              </button>
+
+              <button
+                onClick={() => router.push('/signin?email=sarah@demo.com')}
+                className="w-full bg-primary hover:bg-primary-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+              >
+                <LogIn className="w-4 h-4" />
+                Go to Signin
+              </button>
+            </div>
+          </div>
+
+          {/* Card 3: Nicole Admin SignIn */}
           <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-6 border border-gray-200 dark:border-gray-600 hover:border-primary transition-all">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
@@ -434,26 +495,41 @@ export default function LandingPage() {
               </div>
               <div>
                 <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                  Admin Sign In
+                  Nicole Walsh
                 </h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Realwired Admin access
+                <p className="text-xs text-gray-600 dark:text-gray-400">
+                  Realwired Admin
                 </p>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Pre-filled Email</p>
-                <p className="text-sm font-semibold text-gray-900 dark:text-white">{adminEmail}</p>
+            <div className="space-y-3">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Use this email to sign in via magic link:
+              </p>
+              
+              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-3 relative">
+                <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Email</p>
+                <p className="text-sm font-mono font-semibold text-gray-900 dark:text-white">admin@demo.com</p>
               </div>
 
               <button
-                onClick={() => router.push(`/signin?email=${encodeURIComponent(adminEmail)}`)}
+                onClick={() => {
+                  navigator.clipboard.writeText('admin@demo.com');
+                  alert('✅ Email copied to clipboard!');
+                }}
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm"
+              >
+                <Mail className="w-4 h-4" />
+                Copy Email
+              </button>
+
+              <button
+                onClick={() => router.push('/signin?email=admin@demo.com')}
                 className="w-full bg-primary hover:bg-primary-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
               >
                 <Shield className="w-4 h-4" />
-                Admin Signin
+                Go to Signin
               </button>
             </div>
           </div>

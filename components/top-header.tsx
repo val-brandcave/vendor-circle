@@ -52,7 +52,7 @@ const mockNotifications = {
     {
       id: 1,
       title: "New Vendor Registration",
-      message: "Sarah Chen has completed registration",
+      message: "Tom Reynolds has completed registration",
       time: "10 minutes ago",
       unread: true,
     },

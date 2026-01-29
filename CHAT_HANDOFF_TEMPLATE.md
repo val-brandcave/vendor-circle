@@ -558,12 +558,18 @@ Current task: [what you want to do]
 
 ## 🔄 WHEN TO UPDATE THIS TEMPLATE
 
+**GIT COMMIT RULE:** ⚠️ **NO AUTOMATIC COMMITS ON HANDOFF** ⚠️
+- I will NOT commit changes when updating handoff/status documents
+- I will NOT commit changes when you say "ready to move on"
+- Only commit when you explicitly request: "commit this" or "make a commit"
+- This keeps handoff updates friction-free and under your control
+
 **AUTOMATED: When you say "ready to move on" in a chat session, the AI will:**
 1. Update this handoff template with the latest session's changes
 2. Update PROJECT_STATUS.md with session summary
 3. List all important docs the next session should read
 4. Insert this same automated process note in the template
-5. Commit changes to show progress
+5. ⚠️ **DO NOT COMMIT** (unless you explicitly request it)
 
 Update this template manually when:
 - Project moves to new phase (Phase 2, Phase 3, etc.)

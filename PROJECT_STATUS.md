@@ -28,6 +28,13 @@ Create a new `.md` file **only if**:
 - Default: leave the `context/` folder untouched (it contains meeting notes, PRDs, research)
 - Default: leave `vendors-circle-app/PASSWORDLESS_AUTH_COMPLETE.md` and similar implementation guides untouched
 
+### 🔴 GIT COMMIT RULE:
+**NO AUTOMATIC COMMITS ON HANDOFF OR STATUS UPDATES**
+- I will NOT commit when updating handoff/status documents
+- I will NOT commit when you say "ready to move on" to next chat
+- **Only commit when you explicitly request it**: "commit this" or "make a commit"
+- This keeps documentation updates friction-free and under your control
+
 ---
 
 ## 📝 RECENT COMPLETIONS

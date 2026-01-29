@@ -2,7 +2,7 @@
 
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Mail, Clock, RefreshCw } from 'lucide-react';
+import { Mail, Clock, RefreshCw, Copy, Check } from 'lucide-react';
 import { SplitPaneLayout } from '@/components/auth/split-pane-layout';
 import { RealwiredBranding } from '@/components/realwired-branding';
 import { useState, useEffect } from 'react';
@@ -12,11 +12,13 @@ function CheckEmailContent() {
   const searchParams = useSearchParams();
   const email = searchParams?.get('email') || '';
   const type = searchParams?.get('type') as 'signin' | 'signup' || 'signin';
+  const magicLinkParam = searchParams?.get('token') || '';
   
   const [canResend, setCanResend] = useState(false);
   const [resending, setResending] = useState(false);
   const [resent, setResent] = useState(false);
   const [countdown, setCountdown] = useState(60);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     // Countdown timer for resend button
@@ -47,6 +49,12 @@ function CheckEmailContent() {
     } finally {
       setResending(false);
     }
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(magicLinkParam);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -97,6 +105,45 @@ function CheckEmailContent() {
             </p>
           </div>
         </div>
+
+        {/* Magic Link Demo Box */}
+        {magicLinkParam && (
+          <div className="mb-8 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+            <div className="mb-3">
+              <p className="text-xs font-medium text-amber-800 dark:text-amber-200 mb-2 flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5" />
+                For demo purposes, copy the link below:
+              </p>
+              <p className="text-xs text-amber-700 dark:text-amber-300 mb-3">
+                Paste it in your browser's address bar to complete the process
+              </p>
+            </div>
+            
+            {/* Link Display Box */}
+            <div className="relative">
+              <div className="bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-700 rounded p-3 pr-12 min-h-[50px] flex items-center break-all text-xs text-gray-700 dark:text-gray-300 font-mono">
+                {magicLinkParam}
+              </div>
+              
+              {/* Copy Button */}
+              <button
+                onClick={handleCopyLink}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-colors"
+                title="Copy link"
+              >
+                {copied ? (
+                  <Check className="w-5 h-5 text-green-600 dark:text-green-400" />
+                ) : (
+                  <Copy className="w-5 h-5 text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400" />
+                )}
+              </button>
+            </div>
+
+            <p className="text-xs text-amber-700 dark:text-amber-300 mt-2">
+              💡 Click the copy icon, then paste the link in a new browser tab
+            </p>
+          </div>
+        )}
 
         {/* Resend Link */}
         <div className="text-center space-y-4">

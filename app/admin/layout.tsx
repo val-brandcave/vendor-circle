@@ -7,8 +7,8 @@ import TopHeader from "@/components/top-header";
 import { getAdminNavItems } from "@/components/navigation/nav-items";
 
 const mockAdminUser = {
-  name: "Sarah Chen",
-  email: "sarah@realwired.com",
+  name: "Nicole Walsh",
+  email: "admin@demo.com",
   role: "Admin",
   avatar: "/avatars/Admin-Sara-Cheng.png",
 };

@@ -27,10 +27,12 @@ export default function SignInPage() {
 
     try {
       // Send magic link
-      await sendMagicLink(email, 'signin');
+      const result = await sendMagicLink(email, 'signin');
       
-      // Redirect to check email page
-      router.push(`/check-email?email=${encodeURIComponent(email)}&type=signin`);
+      // Redirect to check email page with magic link
+      router.push(
+        `/check-email?email=${encodeURIComponent(email)}&type=signin&token=${encodeURIComponent(result.magicLink)}`
+      );
     } catch (err) {
       setError('Failed to send magic link. Please try again.');
       console.error('Signin error:', err);
@@ -129,44 +131,6 @@ export default function SignInPage() {
             </Button>
           </form>
 
-          {/* Demo Accounts Toggle */}
-          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-            <button
-              onClick={() => setShowDemoAccounts(!showDemoAccounts)}
-              className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-            >
-              {showDemoAccounts ? '← Hide' : '🎭 Quick Demo Login'}
-            </button>
-            
-            {showDemoAccounts && (
-              <div className="mt-4 space-y-2">
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                  Bypass email for instant testing:
-                </p>
-                <button
-                  onClick={() => handleDemoLogin('tom@demo.com')}
-                  className="w-full text-left px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-sm"
-                >
-                  <div className="font-medium text-gray-900 dark:text-white">Individual Vendor</div>
-                  <div className="text-gray-500 dark:text-gray-400 text-xs">tom@demo.com</div>
-                </button>
-                <button
-                  onClick={() => handleDemoLogin('sarah@demo.com')}
-                  className="w-full text-left px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-sm"
-                >
-                  <div className="font-medium text-gray-900 dark:text-white">Business Admin</div>
-                  <div className="text-gray-500 dark:text-gray-400 text-xs">sarah@demo.com</div>
-                </button>
-                <button
-                  onClick={() => handleDemoLogin('admin@demo.com')}
-                  className="w-full text-left px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-sm"
-                >
-                  <div className="font-medium text-gray-900 dark:text-white">Realwired Admin</div>
-                  <div className="text-gray-500 dark:text-gray-400 text-xs">admin@demo.com</div>
-                </button>
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Sign Up Link */}

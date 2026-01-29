@@ -37,10 +37,12 @@ export default function SignUpPage() {
 
     try {
       // Send magic link
-      await sendMagicLink(email, 'signup');
+      const result = await sendMagicLink(email, 'signup');
       
-      // Redirect to check email page
-      router.push(`/check-email?email=${encodeURIComponent(email)}&type=signup`);
+      // Redirect to check email page with magic link
+      router.push(
+        `/check-email?email=${encodeURIComponent(email)}&type=signup&token=${encodeURIComponent(result.magicLink)}`
+      );
     } catch (err) {
       setError('Failed to send magic link. Please try again.');
       console.error('Signup error:', err);
