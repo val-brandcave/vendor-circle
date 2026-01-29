@@ -1,0 +1,21 @@
+# Documentation
+context/
+*.md
+
+# Development
+.next
+node_modules
+.env.local
+.env.development
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
