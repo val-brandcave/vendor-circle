@@ -216,15 +216,17 @@ export default function VendorDashboard() {
         )}
       </div>
 
-      {/* NEW: Ranking Card + Active Work in Same Row */}
+      {/* NEW: Your Performance Widget (Full Width) */}
+      {!isFirstTimeUser && (
+        <div>
+          <VendorRankingCard userId={user?.id} region="FL" specialty="Residential" />
+        </div>
+      )}
+
+      {/* NEW: Active Work + Recent Activity in Same Row */}
       {!isFirstTimeUser && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left: Ranking Card (2/3 width) */}
-          <div className="lg:col-span-2">
-            <VendorRankingCard userId={user?.id} region="FL" specialty="Residential" />
-          </div>
-
-          {/* Right: Active Work Widget (1/3 width) */}
+          {/* Left: Active Work Widget (1/3 width) */}
           <div>
             <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 h-full flex flex-col">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
@@ -275,41 +277,43 @@ export default function VendorDashboard() {
               </button>
             </div>
           </div>
+
+          {/* Right: Recent Activity Widget (2/3 width) */}
+          <div className="lg:col-span-2">
+            <div className="recent-requests bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 h-full flex flex-col">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Recent Activity
+              </h2>
+
+              {isFirstTimeUser ? (
+                // Empty state
+                <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 p-8 text-center flex-1 flex items-center justify-center">
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Your activity will appear here as you use the platform
+                  </p>
+                </div>
+              ) : (
+                // Activity feed
+                <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700 flex-1">
+                  {recentActivity.map((activity) => (
+                    <div key={activity.id} className="p-4 flex items-start gap-3">
+                      <div className="w-2 h-2 rounded-full bg-blue-500 mt-2"></div>
+                      <div className="flex-1">
+                        <div className="text-sm text-gray-900 dark:text-white">
+                          {activity.text}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          {activity.time}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
-
-      {/* Recent Activity */}
-      <div className="recent-requests bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-          Recent Activity
-        </h2>
-
-        {isFirstTimeUser ? (
-          // Empty state
-          <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 p-8 text-center">
-            <p className="text-gray-500 dark:text-gray-400">
-              Your activity will appear here as you use the platform
-            </p>
-          </div>
-        ) : (
-          // Activity feed
-          <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-            {recentActivity.map((activity) => (
-              <div key={activity.id} className="p-4 flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-blue-500 mt-2"></div>
-                <div className="flex-1">
-                  <div className="text-sm text-gray-900 dark:text-white">
-                    {activity.text}
-                  </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    {activity.time}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
     </>
   );
