@@ -17,8 +17,10 @@ import {
   KeyRound,
   Send,
   ChevronDown,
+  Copy,
 } from 'lucide-react';
 import { isAuthenticated, getCurrentUser, quickLoginDemo, getAllUsers, initializeAuth } from '@/lib/auth/auth-utils';
+import Image from 'next/image';
 import { generateInviteToken } from '@/lib/email/magic-link';
 import { RealwiredBranding } from '@/components/realwired-branding';
 
@@ -52,11 +54,8 @@ export default function LandingPage() {
   const [teamEmail, setTeamEmail] = useState('');
   const [teamLinkCopied, setTeamLinkCopied] = useState(false);
 
-  // Admin State
-  const [adminEmail] = useState('admin@demo.com');
-
-  // Signin State
-  const [signinEmail, setSigninEmail] = useState('');
+  // Email Copy State (for auth flow cards)
+  const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
 
   // Check if user is authenticated - redirect to dashboard if so
   useEffect(() => {
@@ -70,6 +69,7 @@ export default function LandingPage() {
         return;
       }
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Initial auth check
     setChecking(false);
   }, [router]);
 
@@ -203,15 +203,19 @@ export default function LandingPage() {
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-8">
         <div className="text-center mb-6">
-          <img
+          <Image
             src="/logos/vendors-circle-logo.svg"
             alt="Vendors Circle"
-            className="h-12 mx-auto mb-4 dark:hidden"
+            width={200}
+            height={48}
+            className="h-12 w-auto mx-auto mb-4 dark:hidden"
           />
-          <img
+          <Image
             src="/logos/Realwired-Logo-White.svg"
             alt="Vendors Circle"
-            className="h-12 mx-auto mb-4 hidden dark:block"
+            width={200}
+            height={48}
+            className="h-12 w-auto mx-auto mb-4 hidden dark:block"
           />
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             Vendors Circle Demo Catalogue
@@ -243,7 +247,7 @@ export default function LandingPage() {
       {/* Sign Out Info Banner */}
       <div className="max-w-7xl mx-auto mb-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
         <p className="text-sm text-gray-700 dark:text-gray-300">
-          <strong>💡 Pro Tip:</strong> You can sign out from any user type (top-right menu → "Sign Out") and return to this catalogue page to test another account or auth flow.
+          <strong>💡 Pro Tip:</strong> You can sign out from any user type (top-right menu → &quot;Sign Out&quot;) and return to this catalogue page to test another account or auth flow.
         </p>
       </div>
 
@@ -378,7 +382,7 @@ export default function LandingPage() {
                   Authentication Flows
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  Sign in via magic links - Use the correct email or you won't reach the right account
+                  Sign in via magic links - Use the correct email or you won&apos;t reach the right account
                 </p>
               </div>
             </div>
@@ -413,22 +417,28 @@ export default function LandingPage() {
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 Use this email to sign in via magic link:
               </p>
-              
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 relative">
-                <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Email</p>
-                <p className="text-sm font-mono font-semibold text-gray-900 dark:text-white">tom@demo.com</p>
-              </div>
 
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText('tom@demo.com');
-                  alert('✅ Email copied to clipboard!');
-                }}
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm"
-              >
-                <Mail className="w-4 h-4" />
-                Copy Email
-              </button>
+              <div className="bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3 relative flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">Email</p>
+                  <p className="text-sm font-mono font-semibold text-gray-900 dark:text-white">tom@demo.com</p>
+                </div>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText('tom@demo.com');
+                    setCopiedEmail('tom');
+                    setTimeout(() => setCopiedEmail(null), 2000);
+                  }}
+                  className="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md transition-colors"
+                  title="Copy email"
+                >
+                  {copiedEmail === 'tom' ? (
+                    <Check className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  ) : (
+                    <Copy className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                  )}
+                </button>
+              </div>
 
               <button
                 onClick={() => router.push('/signin?email=tom@demo.com')}
@@ -460,22 +470,28 @@ export default function LandingPage() {
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 Use this email to sign in via magic link:
               </p>
-              
-              <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-3 relative">
-                <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Email</p>
-                <p className="text-sm font-mono font-semibold text-gray-900 dark:text-white">sarah@demo.com</p>
-              </div>
 
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText('sarah@demo.com');
-                  alert('✅ Email copied to clipboard!');
-                }}
-                className="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm"
-              >
-                <Mail className="w-4 h-4" />
-                Copy Email
-              </button>
+              <div className="bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3 relative flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">Email</p>
+                  <p className="text-sm font-mono font-semibold text-gray-900 dark:text-white">sarah@demo.com</p>
+                </div>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText('sarah@demo.com');
+                    setCopiedEmail('sarah');
+                    setTimeout(() => setCopiedEmail(null), 2000);
+                  }}
+                  className="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md transition-colors"
+                  title="Copy email"
+                >
+                  {copiedEmail === 'sarah' ? (
+                    <Check className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  ) : (
+                    <Copy className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                  )}
+                </button>
+              </div>
 
               <button
                 onClick={() => router.push('/signin?email=sarah@demo.com')}
@@ -507,22 +523,28 @@ export default function LandingPage() {
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 Use this email to sign in via magic link:
               </p>
-              
-              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-3 relative">
-                <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Email</p>
-                <p className="text-sm font-mono font-semibold text-gray-900 dark:text-white">admin@demo.com</p>
-              </div>
 
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText('admin@demo.com');
-                  alert('✅ Email copied to clipboard!');
-                }}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm"
-              >
-                <Mail className="w-4 h-4" />
-                Copy Email
-              </button>
+              <div className="bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3 relative flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">Email</p>
+                  <p className="text-sm font-mono font-semibold text-gray-900 dark:text-white">admin@demo.com</p>
+                </div>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText('admin@demo.com');
+                    setCopiedEmail('admin');
+                    setTimeout(() => setCopiedEmail(null), 2000);
+                  }}
+                  className="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md transition-colors"
+                  title="Copy email"
+                >
+                  {copiedEmail === 'admin' ? (
+                    <Check className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  ) : (
+                    <Copy className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                  )}
+                </button>
+              </div>
 
               <button
                 onClick={() => router.push('/signin?email=admin@demo.com')}
