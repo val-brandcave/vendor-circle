@@ -3,7 +3,8 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { OnboardingStepper } from '@/components/onboarding-stepper-new';
-import { buildTeamMemberSteps, isTeamMemberStepComplete, prefillBusinessCoverage } from '@/lib/onboarding/team-member-steps';
+import { buildTeamMemberSteps, prefillBusinessCoverage } from '@/lib/onboarding/team-member-steps';
+import { addToTeam } from '@/lib/auth/auth-utils';
 import { getCurrentUser } from '@/lib/auth/auth-utils';
 import confetti from 'canvas-confetti';
 
@@ -12,7 +13,7 @@ function OnboardingTeamContent() {
   const searchParams = useSearchParams();
   const businessName = searchParams?.get('business') || 'the team';
   
-  const [data, setData] = useState<Record<string, any>>({
+  const [data, setData] = useState<Record<string, unknown>>({
     userType: 'individual', // Team members are individual appraisers
     isTeamMember: true,
     businessName,
@@ -32,6 +33,7 @@ function OnboardingTeamContent() {
         }
       });
       
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Initialization from session storage
       setData((prev) => ({
         ...prev,
         ...businessCoverage,
@@ -40,14 +42,15 @@ function OnboardingTeamContent() {
     }
   }, []);
 
-  const handleComplete = (completedData: Record<string, any>) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleComplete = (_completedData: Record<string, unknown>) => {
     const user = getCurrentUser();
     if (!user) return;
 
     // Mark onboarding as complete
     if (typeof window !== 'undefined') {
       const users = JSON.parse(localStorage.getItem('vendors_circle_users') || '[]');
-      const userIndex = users.findIndex((u: any) => u.id === user.id);
+      const userIndex = users.findIndex((u: { id: string }) => u.id === user.id);
       if (userIndex !== -1) {
         users[userIndex].hasCompletedOnboarding = true;
         localStorage.setItem('vendors_circle_users', JSON.stringify(users));
@@ -64,7 +67,6 @@ function OnboardingTeamContent() {
       const context = JSON.parse(teamContext);
       
       // Add user to team
-      const { addToTeam } = require('@/lib/auth/auth-utils');
       addToTeam(user.id, context.businessId, context.businessName, context.role);
       
       // Store success message for dashboard
@@ -93,7 +95,7 @@ function OnboardingTeamContent() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <OnboardingStepper
         title="Team Member Setup"
-        getSteps={(currentData) => buildTeamMemberSteps(businessName)}
+        getSteps={() => buildTeamMemberSteps(businessName)}
         onComplete={handleComplete}
         initialData={data}
         showSkip={false}

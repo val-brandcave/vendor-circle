@@ -3,9 +3,10 @@
  * Using Shepherd.js for interactive product tours
  */
 
-import Shepherd from "shepherd.js";
-import type { Tour, Step } from "shepherd.js";
 import "shepherd.js/dist/css/shepherd.css";
+
+// Shepherd.js types are complex - using simplified types for configuration
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export type TourType = "vendor" | "business" | "admin";
 

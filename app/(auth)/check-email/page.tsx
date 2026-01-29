@@ -7,6 +7,7 @@ import { SplitPaneLayout } from '@/components/auth/split-pane-layout';
 import { RealwiredBranding } from '@/components/realwired-branding';
 import { useState, useEffect } from 'react';
 import { sendMagicLink } from '@/lib/email/magic-link';
+import Image from 'next/image';
 
 function CheckEmailContent() {
   const searchParams = useSearchParams();
@@ -63,15 +64,19 @@ function CheckEmailContent() {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-6">
-            <img
+            <Image
               src="/logos/vendors-circle-logo.svg"
               alt="Vendors Circle"
-              className="h-12 dark:hidden"
+              width={200}
+              height={48}
+              className="h-12 w-auto dark:hidden"
             />
-            <img
+            <Image
               src="/logos/Realwired-Logo-White.svg"
               alt="Vendors Circle"
-              className="h-12 hidden dark:block"
+              width={200}
+              height={48}
+              className="h-12 w-auto hidden dark:block"
             />
           </div>
         </div>
@@ -115,7 +120,7 @@ function CheckEmailContent() {
                 For demo purposes, copy the link below:
               </p>
               <p className="text-xs text-amber-700 dark:text-amber-300 mb-3">
-                Paste it in your browser's address bar to complete the process
+                Paste it in your browser&apos;s address bar to complete the process
               </p>
             </div>
             
@@ -163,7 +168,7 @@ function CheckEmailContent() {
           </button>
 
           <div className="text-sm text-gray-600 dark:text-gray-400">
-            Can't find the email? Check your spam folder
+            Can&apos;t find the email? Check your spam folder
           </div>
         </div>
 

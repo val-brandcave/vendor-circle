@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { OnboardingStepper, StepComponentProps } from "@/components/onboarding-stepper-new";
 import { isAuthenticated } from "@/lib/auth/auth-utils";
-import { User, Building2, Settings, CheckCircle } from "lucide-react";
+// Icons available if needed for future UI enhancements
 
 // Step 1: Personal Information
 function PersonalInfoStep({ data, onDataChange }: StepComponentProps) {
@@ -15,7 +15,7 @@ function PersonalInfoStep({ data, onDataChange }: StepComponentProps) {
           Personal Information
         </h1>
         <p className="text-base text-gray-600 dark:text-gray-400">
-          Let's start with your basic information
+          Let&apos;s start with your basic information
         </p>
       </div>
 
@@ -448,7 +448,7 @@ export default function AdminOnboardingPage() {
     },
   ];
 
-  const handleComplete = (data: Record<string, any>) => {
+  const handleComplete = (data: Record<string, unknown>) => {
     console.log("Admin onboarding complete:", data);
     // Save to localStorage/API
     localStorage.setItem("adminProfile", JSON.stringify(data));

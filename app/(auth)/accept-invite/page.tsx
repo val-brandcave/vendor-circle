@@ -3,13 +3,14 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { CheckCircle2, Mail, AlertCircle, Building2 } from 'lucide-react';
+import { Mail, AlertCircle, Building2 } from 'lucide-react';
 import { SplitPaneLayout } from '@/components/auth/split-pane-layout';
 import { RealwiredBranding } from '@/components/realwired-branding';
-import { validateInviteToken } from '@/lib/email/magic-link';
-import { sendMagicLink } from '@/lib/email/magic-link';
+import { validateInviteToken, generateMagicLinkToken } from '@/lib/email/magic-link';
+import { signUp } from '@/lib/auth/auth-utils';
 import { getAllUsers } from '@/lib/auth/auth-utils';
-import { getBankById, BANKS } from '@/lib/data/banks';
+import { getBankById } from '@/lib/data/banks';
+import Image from 'next/image';
 
 function AcceptInviteContent() {
   const router = useRouter();
@@ -19,7 +20,6 @@ function AcceptInviteContent() {
   const [valid, setValid] = useState(false);
   const [error, setError] = useState('');
   const [bankName, setBankName] = useState('');
-  const [bankId, setBankId] = useState('');
   const [email, setEmail] = useState('');
   const [isExistingUser, setIsExistingUser] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,8 +27,9 @@ function AcceptInviteContent() {
 
   useEffect(() => {
     const token = searchParams?.get('token');
-    
+
     if (!token) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Initialization pattern
       setValidating(false);
       setError('No invitation token provided');
       return;
@@ -60,7 +61,6 @@ function AcceptInviteContent() {
     const logoPath = bankInfo?.logo || '/logos/banks/generic-bank-logo.svg';
 
     setBankName(data.bankName || 'Bank');
-    setBankId(data.bankId || '');
     setBankLogo(logoPath);
     setEmail(data.email);
     setIsExistingUser(!!existingUser);
@@ -84,7 +84,6 @@ function AcceptInviteContent() {
     try {
       if (!isExistingUser) {
         // New users: Auto-create account (email verified via bank invite trust)
-        const { signUp } = require('@/lib/auth/auth-utils');
         const result = signUp(email);
         
         if (result.success) {
@@ -97,7 +96,6 @@ function AcceptInviteContent() {
         }
       } else {
         // Existing users: Generate magic link
-        const { generateMagicLinkToken } = require('@/lib/email/magic-link');
         const token = generateMagicLinkToken(email, 'signin');
         const magicLink = `${window.location.origin}/verify-magic?token=${token}`;
         
@@ -163,21 +161,25 @@ function AcceptInviteContent() {
         <div className="text-center mb-6">
           <div className="inline-flex p-2 bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 mb-3">
             {bankLogo ? (
-              <img src={bankLogo} alt={bankName} className="h-8 w-auto object-contain" />
+              <Image src={bankLogo} alt={bankName} width={32} height={32} className="h-8 w-auto object-contain" unoptimized />
             ) : (
               <Building2 className="w-8 h-8 text-primary" />
             )}
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">invites you to</p>
-          <img
+          <Image
             src="/logos/vendors-circle-logo.svg"
             alt="Vendors Circle"
-            className="h-10 mx-auto dark:hidden"
+            width={200}
+            height={40}
+            className="h-10 w-auto mx-auto dark:hidden"
           />
-          <img
+          <Image
             src="/logos/Realwired-Logo-White.svg"
             alt="Vendors Circle"
-            className="h-10 mx-auto hidden dark:block"
+            width={200}
+            height={40}
+            className="h-10 w-auto mx-auto hidden dark:block"
           />
         </div>
 
@@ -224,7 +226,7 @@ function AcceptInviteContent() {
 
           {isExistingUser ? (
             <p className="text-sm text-center text-gray-600 dark:text-gray-400">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link href="/signup" className="text-primary dark:text-blue-400 hover:underline">
                 Create one now
               </Link>

@@ -5,9 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Mail, AlertCircle, Users, User } from 'lucide-react';
 import { SplitPaneLayout } from '@/components/auth/split-pane-layout';
 import { RealwiredBranding } from '@/components/realwired-branding';
-import { validateInviteToken } from '@/lib/email/magic-link';
-import { sendMagicLink } from '@/lib/email/magic-link';
-import { getAllUsers } from '@/lib/auth/auth-utils';
+import { validateInviteToken, generateMagicLinkToken } from '@/lib/email/magic-link';
+import { getAllUsers, signUp } from '@/lib/auth/auth-utils';
+import Image from 'next/image';
 
 function JoinTeamContent() {
   const router = useRouter();
@@ -17,7 +17,6 @@ function JoinTeamContent() {
   const [valid, setValid] = useState(false);
   const [error, setError] = useState('');
   const [businessName, setBusinessName] = useState('');
-  const [businessId, setBusinessId] = useState('');
   const [adminName, setAdminName] = useState('');
   const [role, setRole] = useState('Appraiser');
   const [email, setEmail] = useState('');
@@ -26,8 +25,9 @@ function JoinTeamContent() {
 
   useEffect(() => {
     const token = searchParams?.get('token');
-    
+
     if (!token) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Initialization pattern
       setValidating(false);
       setError('No invitation token provided');
       return;
@@ -55,7 +55,6 @@ function JoinTeamContent() {
     const existingUser = users.find((u) => u.email.toLowerCase() === data.email.toLowerCase());
 
     setBusinessName(data.businessName || 'Business');
-    setBusinessId(data.businessId || '');
     setAdminName(data.inviterName || 'Admin');
     setRole(data.role || 'Appraiser');
     setEmail(data.email);
@@ -81,7 +80,6 @@ function JoinTeamContent() {
     try {
       if (!isExistingUser) {
         // New users: Auto-create account (email verified via invite trust)
-        const { signUp } = require('@/lib/auth/auth-utils');
         const result = signUp(email);
         
         if (result.success) {
@@ -94,7 +92,6 @@ function JoinTeamContent() {
         }
       } else {
         // Existing users: Generate magic link
-        const { generateMagicLinkToken } = require('@/lib/email/magic-link');
         const token = generateMagicLinkToken(email, 'signin');
         const magicLink = `${window.location.origin}/verify-magic?token=${token}`;
         
@@ -161,15 +158,19 @@ function JoinTeamContent() {
           <div className="w-20 h-20 mx-auto mb-4 bg-primary/10 rounded-xl flex items-center justify-center">
             <Users className="w-10 h-10 text-primary" />
           </div>
-          <img
+          <Image
             src="/logos/vendors-circle-logo.svg"
             alt="Vendors Circle"
-            className="h-10 mx-auto dark:hidden"
+            width={200}
+            height={40}
+            className="h-10 w-auto mx-auto dark:hidden"
           />
-          <img
+          <Image
             src="/logos/Realwired-Logo-White.svg"
             alt="Vendors Circle"
-            className="h-10 mx-auto hidden dark:block"
+            width={200}
+            height={40}
+            className="h-10 w-auto mx-auto hidden dark:block"
           />
         </div>
 
@@ -227,7 +228,7 @@ function JoinTeamContent() {
 
           {isExistingUser ? (
             <p className="text-sm text-center text-gray-600 dark:text-gray-400">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <button
                 onClick={() => setIsExistingUser(false)}
                 className="text-primary dark:text-blue-400 hover:underline"

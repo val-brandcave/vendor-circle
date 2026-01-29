@@ -4,7 +4,7 @@
  */
 
 import Shepherd from "shepherd.js";
-import type { Step, Tour } from "shepherd.js";
+import type { Tour } from "shepherd.js";
 import { defaultTourOptions, createTourButtons, markTourComplete } from "@/lib/utils/tour-utils";
 
 export function createVendorTour(): Tour {

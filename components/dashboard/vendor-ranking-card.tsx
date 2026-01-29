@@ -9,7 +9,9 @@ interface VendorRankingCardProps {
   specialty?: string;
 }
 
-export function VendorRankingCard({ userId, region = 'FL', specialty = 'Residential' }: VendorRankingCardProps) {
+// Props are defined for future API integration (filtering by region/specialty)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function VendorRankingCard(_props: VendorRankingCardProps) {
   const [loading, setLoading] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
 
