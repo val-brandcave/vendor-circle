@@ -1,9 +1,11 @@
 /**
  * Email Sending Utilities
  * Uses Resend for production or console logging for development
+ * 
+ * IMPORTANT: This file is server-only and should not be imported by client components
  */
 
-import { render } from '@react-email/render';
+import type React from 'react';
 
 interface EmailOptions {
   to: string;
@@ -15,6 +17,8 @@ interface EmailOptions {
  * Send email using Resend or log to console in development
  */
 export async function sendEmail({ to, subject, react }: EmailOptions) {
+  // Dynamic import to ensure this is only loaded on the server
+  const { render } = await import('@react-email/render');
   const html = await render(react);
 
   // Check if Resend API key is configured
