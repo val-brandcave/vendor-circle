@@ -1,6 +1,6 @@
 # 📋 VENDORS CIRCLE - PROJECT STATUS & CONTEXT
-**Last Updated:** January 29, 2026 - Session 16 (Repository Restructuring + Vercel Deployment Ready)
-**Status:** ✅ Phase 1 COMPLETE - Deployed to Vercel (Repository restructured to root; app verified working locally and on Vercel)
+**Last Updated:** January 29, 2026 - Session 17 (Authentication Flows & Catalogue UX Enhancement)
+**Status:** ✅ Phase 1 COMPLETE - Enhanced Demo Flows (Auth improvements, catalogue reorganization, Nicole Walsh admin account)
 **Version:** 0.1.0
 **Code Quality Score:** 8.1/10+ (production-ready, polished)
 **Vercel:** ✅ Live & Working
@@ -38,6 +38,41 @@ Create a new `.md` file **only if**:
 ---
 
 ## 📝 RECENT COMPLETIONS
+
+### **Session 17 (Jan 29, 2026) - Authentication Flows & Catalogue UX Enhancement**
+✅ **Admin Account Renamed**
+   - Updated "Sarah Chen" → "Nicole Walsh" throughout app
+   - Email remains `admin@demo.com`
+   - Updated in: auth-utils.ts, admin layouts, top-header notifications
+
+✅ **Sign-In Page Cleaned Up**
+   - Removed quick demo login dropdown
+   - Clean, focused sign-in interface
+   - Users must enter email and send magic link
+
+✅ **Magic Link Display Box on Check-Email Page**
+   - Visible amber/yellow box with generated magic link
+   - Copy button with click-to-copy functionality
+   - Works for both sign-in and sign-up flows
+   - Console.log kept for development
+
+✅ **Catalogue Page Authentication Flows Reorganized**
+   - Replaced "Admin Sign In" with three individual demo cards
+   - Tom Reynolds (tom@demo.com) - Individual Vendor
+   - Sarah Martinez (sarah@demo.com) - Business Admin
+   - Nicole Walsh (admin@demo.com) - Realwired Admin
+   - Each card has copiable email and clear instructions
+
+✅ **Catalogue Page UX Improvements**
+   - Added sign-out tip banner above accordions
+   - Clear guidance: "You can sign out... and return to this catalogue page"
+   - Warning in Auth Flows: "Use the correct email or you won't reach the right account"
+   - Better visual organization and hierarchy
+
+✅ **Git Commit & Push**
+   - Commit: `e68afff` - feat: enhance authentication flows and catalogue UI
+   - Successfully pushed to GitHub
+   - Build: 0 TypeScript errors, 82 routes
 
 ### **Session 16 (Jan 29, 2026) - Repository Restructuring + Vercel Deployment**
 ✅ **Repository Restructured for Vercel Deployment:**

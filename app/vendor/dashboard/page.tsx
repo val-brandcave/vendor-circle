@@ -17,7 +17,7 @@ import { mockLicenses, mockInsurance } from '@/lib/data/mock-data';
 export default function VendorDashboard() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [showFirstTimeModal, setShowFirstTimeModal] = useState(false);
   const [showBankModal, setShowBankModal] = useState(false);
   const [connectedBankId, setConnectedBankId] = useState('');
